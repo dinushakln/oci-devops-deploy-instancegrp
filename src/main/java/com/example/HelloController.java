@@ -11,6 +11,7 @@ public class HelloController {
     @Produces(MediaType.TEXT_PLAIN) 
     public String index() {
         return "You have successfully deployed a Java-based Web application using OCI DevOps";
+        return "Application Version: 1.2";
     }
 
     @Get ("/{name}")
