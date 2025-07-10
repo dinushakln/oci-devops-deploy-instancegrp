@@ -10,7 +10,7 @@ public class HelloController {
     @Get 
     @Produces(MediaType.TEXT_PLAIN) 
     public String index() {
-        return "Hi! You have succesfully deployed a sample application to instance group - Powered by Graal Enterprise!";
+        return "You have successfully deployed a Java-based Web application using OCI DevOps";
     }
 
     @Get ("/{name}")
