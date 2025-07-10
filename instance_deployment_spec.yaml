@@ -19,7 +19,7 @@ steps:
       cd ~
       python3 -m pip install --user oci-cli
 
-    timeoutInSeconds: 5000
+    timeoutInSeconds: 1200
     shell: bash
     onFailure:
       - stepType: Command
@@ -44,7 +44,7 @@ steps:
       chmod +x appexec
       ./appexec &
 
-    timeoutInSeconds: 5000
+    timeoutInSeconds: 1200
     shell: bash
     onFailure:
       - stepType: Command
