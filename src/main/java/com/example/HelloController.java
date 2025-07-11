@@ -4,9 +4,6 @@ import io.micronaut.context.annotation.Value;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.*;
 import io.micronaut.http.HttpResponse;
-import io.micronaut.http.HttpStatus;
-import io.micronaut.http.annotation.Controller;
-import io.micronaut.http.annotation.Get;
 import jakarta.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,7 +25,7 @@ public class HelloController {
     @Get
     @Produces(MediaType.APPLICATION_JSON)
     public HttpResponse<Map<String, Object>> welcome() {
-        LOG.info("Accessed root endpoint at {}", LocalDateTime.now());
+        LOG.info("Accessed /api endpoint");
         return HttpResponse.ok(Map.of(
                 "message", "Welcome to the OCI DevOps Demo Application",
                 "timestamp", LocalDateTime.now(),
@@ -49,7 +46,10 @@ public class HelloController {
     @Get("/health")
     @Produces(MediaType.APPLICATION_JSON)
     public HttpResponse<Map<String, String>> health() {
-        return HttpResponse.ok(Map.of("status", "UP", "checkedAt", LocalDateTime.now().toString()));
+        return HttpResponse.ok(Map.of(
+                "status", "UP",
+                "checkedAt", LocalDateTime.now().toString()
+        ));
     }
 
     @Get("/version")
