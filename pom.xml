@@ -44,7 +44,7 @@
     </dependency>
     <dependency>
       <groupId>io.micronaut</groupId>
-      <artifactId>micronaut-http-annotation</artifactId> <!-- ✅ Required for @Produces -->
+      <artifactId>micronaut-http</artifactId> <!-- ✅ Required for @Produces -->
       <version>${micronaut.version}</version>
       <scope>compile</scope>
     </dependency>
