@@ -7,20 +7,19 @@
   <groupId>com.example</groupId>
   <artifactId>MnHelloRest</artifactId>
   <version>0.1</version>
-  <packaging>${packaging}</packaging>
+  <packaging>jar</packaging>
 
   <parent>
     <groupId>io.micronaut</groupId>
     <artifactId>micronaut-parent</artifactId>
-    <version>3.6.0</version>
+    <version>3.7.3</version>
   </parent>
 
   <properties>
-    <packaging>jar</packaging>
-    <jdk.version>17</jdk.version>
-    <release.version>17</release.version>
     <micronaut.version>3.7.3</micronaut.version>
     <micronaut.runtime>netty</micronaut.runtime>
+    <jdk.version>17</jdk.version>
+    <release.version>17</release.version>
     <exec.mainClass>com.example.Application</exec.mainClass>
   </properties>
 
@@ -32,6 +31,7 @@
   </repositories>
 
   <dependencies>
+    <!-- Core Micronaut -->
     <dependency>
       <groupId>io.micronaut</groupId>
       <artifactId>micronaut-inject</artifactId>
@@ -42,9 +42,17 @@
       <artifactId>micronaut-validation</artifactId>
       <scope>compile</scope>
     </dependency>
+
+    <!-- HTTP & Annotations -->
     <dependency>
       <groupId>io.micronaut</groupId>
-      <artifactId>micronaut-http</artifactId> <!-- ✅ Required for @Produces -->
+      <artifactId>micronaut-http</artifactId>
+      <version>${micronaut.version}</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.micronaut</groupId>
+      <artifactId>micronaut-http-annotation</artifactId>
       <version>${micronaut.version}</version>
       <scope>compile</scope>
     </dependency>
@@ -58,21 +66,29 @@
       <artifactId>micronaut-http-server-netty</artifactId>
       <scope>compile</scope>
     </dependency>
+
+    <!-- JSON -->
     <dependency>
       <groupId>io.micronaut</groupId>
       <artifactId>micronaut-jackson-databind</artifactId>
       <scope>compile</scope>
     </dependency>
+
+    <!-- Java Annotations -->
     <dependency>
       <groupId>jakarta.annotation</groupId>
       <artifactId>jakarta.annotation-api</artifactId>
       <scope>compile</scope>
     </dependency>
+
+    <!-- Logging -->
     <dependency>
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-classic</artifactId>
       <scope>runtime</scope>
     </dependency>
+
+    <!-- Testing -->
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-api</artifactId>
@@ -92,6 +108,7 @@
 
   <build>
     <plugins>
+      <!-- Micronaut Maven Plugin -->
       <plugin>
         <groupId>io.micronaut.build</groupId>
         <artifactId>micronaut-maven-plugin</artifactId>
@@ -110,7 +127,7 @@
         </configuration>
       </plugin>
 
-      <!-- Compiler plugin with annotation processor paths -->
+      <!-- Maven Compiler Plugin -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
