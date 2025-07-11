@@ -52,12 +52,6 @@
     </dependency>
     <dependency>
       <groupId>io.micronaut</groupId>
-      <artifactId>micronaut-http-annotation</artifactId>
-      <version>${micronaut.version}</version>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>io.micronaut</groupId>
       <artifactId>micronaut-http-client</artifactId>
       <scope>compile</scope>
     </dependency>
