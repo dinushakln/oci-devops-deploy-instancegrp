@@ -31,7 +31,7 @@
   </repositories>
 
   <dependencies>
-    <!-- Micronaut Core -->
+    <!-- Core Micronaut -->
     <dependency>
       <groupId>io.micronaut</groupId>
       <artifactId>micronaut-inject</artifactId>
@@ -42,6 +42,8 @@
       <artifactId>micronaut-validation</artifactId>
       <scope>compile</scope>
     </dependency>
+
+    <!-- HTTP & Annotations -->
     <dependency>
       <groupId>io.micronaut</groupId>
       <artifactId>micronaut-http</artifactId>
@@ -58,16 +60,22 @@
       <artifactId>micronaut-http-server-netty</artifactId>
       <scope>compile</scope>
     </dependency>
+
+    <!-- JSON -->
     <dependency>
       <groupId>io.micronaut</groupId>
       <artifactId>micronaut-jackson-databind</artifactId>
       <scope>compile</scope>
     </dependency>
+
+    <!-- Java Annotations -->
     <dependency>
       <groupId>jakarta.annotation</groupId>
       <artifactId>jakarta.annotation-api</artifactId>
       <scope>compile</scope>
     </dependency>
+
+    <!-- Logging -->
     <dependency>
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-classic</artifactId>
@@ -94,16 +102,17 @@
 
   <build>
     <plugins>
-      <!-- Micronaut Plugin -->
+      <!-- Micronaut Maven Plugin -->
       <plugin>
         <groupId>io.micronaut.build</groupId>
         <artifactId>micronaut-maven-plugin</artifactId>
       </plugin>
 
-      <!-- GraalVM Plugin -->
+      <!-- GraalVM Native Image Plugin -->
       <plugin>
         <groupId>org.graalvm.buildtools</groupId>
         <artifactId>native-maven-plugin</artifactId>
+        <version>0.9.13</version>
         <configuration>
           <buildArgs combine.children="append">
             <buildArg>-H:+ReportExceptionStackTraces</buildArg>
@@ -113,7 +122,7 @@
         </configuration>
       </plugin>
 
-      <!-- Compiler Plugin -->
+      <!-- Maven Compiler Plugin -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -134,7 +143,7 @@
     </plugins>
   </build>
 
-  <!-- Native Profile -->
+  <!-- Native Build Profile -->
   <profiles>
     <profile>
       <id>native</id>
@@ -143,21 +152,14 @@
           <plugin>
             <groupId>org.graalvm.buildtools</groupId>
             <artifactId>native-maven-plugin</artifactId>
+            <version>0.9.13</version>
             <executions>
               <execution>
                 <goals>
-                  <goal>compile-no-fork</goal>
+                  <goal>build</goal>
                 </goals>
               </execution>
             </executions>
-            <configuration>
-              <imageName>${project.build.directory}/MnHelloRest</imageName>
-              <buildArgs combine.children="append">
-                <buildArg>-H:+ReportExceptionStackTraces</buildArg>
-                <buildArg>-H:+StaticExecutableWithDynamicLibC</buildArg>
-                <buildArg>--verbose</buildArg>
-              </buildArgs>
-            </configuration>
           </plugin>
         </plugins>
       </build>
