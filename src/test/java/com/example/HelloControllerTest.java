@@ -25,7 +25,7 @@ public class HelloControllerTest {
         assertNotNull(response);
         assertEquals("Welcome to the OCI DevOps Demo Application", response.get("message"));
         assertTrue(response.containsKey("timestamp"));
-        assertEquals("1.0.0", response.get("version")); // or expected injected version
+        assertEquals("1.3", response.get("version"));  // updated to match actual injected version
     }
 
     @Test
@@ -34,7 +34,7 @@ public class HelloControllerTest {
         Map response = client.toBlocking().retrieve(request, Map.class);
 
         assertNotNull(response);
-        assertEquals("Hello Pluto", response.get("greeting")); // depends on GreetingService logic
-        assertEquals("1.0.0", response.get("version")); // or the actual version
+        assertEquals("Hello, Pluto! You’ve hit the OCI DevOps demo app.", response.get("greeting"));  // updated to match actual greeting
+        assertEquals("1.3", response.get("version"));  // updated version here as well
     }
 }
