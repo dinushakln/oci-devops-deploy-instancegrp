@@ -1,36 +1,40 @@
 package com.example;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.client.HttpClient;
 import io.micronaut.http.client.annotation.Client;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import jakarta.inject.Inject;
+import org.junit.jupiter.api.Test;
+import java.util.Map;
 
-@MicronautTest 
+@MicronautTest
 public class HelloControllerTest {
 
     @Inject
-    @Client("/")  
+    @Client("/")
     HttpClient client;
 
     @Test
-    public void testHello() {
-        HttpRequest<String> request = HttpRequest.GET("/");  
-        String body = client.toBlocking().retrieve(request);
+    public void testApiWelcome() {
+        HttpRequest<String> request = HttpRequest.GET("/api");
+        Map response = client.toBlocking().retrieve(request, Map.class);
 
-        assertNotNull(body);
-        assertEquals("With Love from OCI Devops - Powered by Graal Enterprise!", body);
+        assertNotNull(response);
+        assertEquals("Welcome to the OCI DevOps Demo Application", response.get("message"));
+        assertTrue(response.containsKey("timestamp"));
+        assertEquals("1.0.0", response.get("version")); // or expected injected version
     }
+
     @Test
     public void testHelloName() {
-        HttpRequest<String> request = HttpRequest.GET("/Pluto");  
-        String body = client.toBlocking().retrieve(request);
+        HttpRequest<String> request = HttpRequest.GET("/api/hello/Pluto");
+        Map response = client.toBlocking().retrieve(request, Map.class);
 
-        assertNotNull(body);
-        assertEquals("Hello Pluto", body);
+        assertNotNull(response);
+        assertEquals("Hello Pluto", response.get("greeting")); // depends on GreetingService logic
+        assertEquals("1.0.0", response.get("version")); // or the actual version
     }
 }
