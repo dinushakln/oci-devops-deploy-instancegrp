@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.example</groupId>
   <artifactId>MnHelloRest</artifactId>
@@ -41,19 +43,9 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-api</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-engine</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>io.micronaut.test</groupId>
-      <artifactId>micronaut-test-junit5</artifactId>
-      <scope>test</scope>
+      <groupId>io.micronaut</groupId>
+      <artifactId>micronaut-http-annotation</artifactId> <!-- ✅ Required for @Produces -->
+      <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>io.micronaut</groupId>
@@ -80,6 +72,21 @@
       <artifactId>logback-classic</artifactId>
       <scope>runtime</scope>
     </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-api</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-engine</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.micronaut.test</groupId>
+      <artifactId>micronaut-test-junit5</artifactId>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 
   <build>
@@ -88,29 +95,25 @@
         <groupId>io.micronaut.build</groupId>
         <artifactId>micronaut-maven-plugin</artifactId>
       </plugin>
-      <!-- Begin: Added for passing additional arguments to the native-image build tool -->
+
+      <!-- GraalVM Native Image Plugin -->
       <plugin>
         <groupId>org.graalvm.buildtools</groupId>
         <artifactId>native-maven-plugin</artifactId>
         <configuration>
           <buildArgs combine.children="append">
             <buildArg>-H:+ReportExceptionStackTraces</buildArg>
-            <!-- For mostly static native image (only on Linux AMD64 systems) -->
             <buildArg>-H:+StaticExecutableWithDynamicLibC</buildArg>
             <buildArg>--verbose</buildArg>
-            <!-- For Quick Build (22.1+) -->
-            <!-- <buildArg>-Ob</buildArg> -->
           </buildArgs>
         </configuration>
       </plugin>
-      <!-- End: Added for passing additional arguments to the native-image build tool -->
+
+      <!-- Compiler plugin with annotation processor paths -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
         <configuration>
-          <!-- Uncomment to enable incremental compilation -->
-          <!-- <useIncrementalCompilation>false</useIncrementalCompilation> -->
-
           <annotationProcessorPaths combine.children="append">
             <path>
               <groupId>io.micronaut</groupId>
