@@ -1,4 +1,4 @@
-version: 0.1 
+version: 0.1  
 component: build
 timeoutInSeconds: 900
 failImmediatelyOnError: true
@@ -8,15 +8,17 @@ shell: bash
 env:
   variables:
     JAVA_HOME: "/usr/lib64/graalvm/graalvm22-ee-java17"
-    TAG: "mn-hello-ni:0.0.1"
-    APP_FILE: "MnHelloRest"
+    APP_VERSION: "0.0.1"
+    APP_FILE: "MnHelloRest-${APP_VERSION}"
     ARTIFACT_FILE_NAME: "exec-app"
+    TAG: "mn-hello-ni:${APP_VERSION}"
   vaultVariables:
     ARTIFACT_REPO_OCID_FromVault: ocid1.vaultsecret.oc1.iad.amaaaaaavrxjjqyaai7cmrrg3tw6b5jkv7zzazyms2zc3nluq4cvcqxy2jja
   exportedVariables:
     - BUILDRUN_HASH
     - ARTIFACT_NAME
     - ARTIFACT_REPO_OCID
+    - APP_VERSION
 
 steps:
   - type: Command
@@ -28,6 +30,8 @@ steps:
       echo "BUILDRUN_HASH: $BUILDRUN_HASH"
       export ARTIFACT_REPO_OCID=${ARTIFACT_REPO_OCID_FromVault}
       export ARTIFACT_NAME=${ARTIFACT_FILE_NAME}
+      export APP_VERSION=${APP_VERSION}
+      echo "APP_VERSION: $APP_VERSION"
 
   - type: Command
     name: "Install GraalVM 22 Native Image for Java 17"
@@ -44,12 +48,13 @@ steps:
     command: |
       export PATH=$JAVA_HOME/bin:$PATH
       mvn --no-transfer-progress clean package -Pnative
+      mv target/MnHelloRest target/${APP_FILE}
       ls -ltr target
 
 outputArtifacts:
   - name: app_native_executable
     type: BINARY
-    location: target/MnHelloRest
+    location: target/MnHelloRest-${APP_VERSION}
 
   - name: deployment_spec
     type: BINARY

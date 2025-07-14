@@ -6,7 +6,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.example</groupId>
   <artifactId>MnHelloRest</artifactId>
-  <version>0.1</version>
+  <version>0.0.1</version>
   <packaging>jar</packaging>
 
   <parent>
@@ -21,6 +21,7 @@
     <jdk.version>17</jdk.version>
     <release.version>17</release.version>
     <exec.mainClass>com.example.Application</exec.mainClass>
+    <native.image.name>${project.artifactId}-${project.version}</native.image.name>
   </properties>
 
   <repositories>
@@ -114,6 +115,7 @@
         <artifactId>native-maven-plugin</artifactId>
         <version>0.9.13</version>
         <configuration>
+          <imageName>${native.image.name}</imageName>
           <buildArgs combine.children="append">
             <buildArg>-H:+ReportExceptionStackTraces</buildArg>
             <buildArg>-H:+StaticExecutableWithDynamicLibC</buildArg>
