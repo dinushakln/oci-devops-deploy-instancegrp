@@ -8,6 +8,8 @@ import jakarta.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.time.LocalDateTime;
 import java.util.Map;
 
@@ -47,9 +49,18 @@ public class HelloController {
     @Get("/health")
     @Produces(MediaType.APPLICATION_JSON)
     public HttpResponse<Map<String, Object>> health() {
+        String hostname;
+        try {
+            hostname = InetAddress.getLocalHost().getHostName();
+        } catch (UnknownHostException e) {
+            LOG.warn("Unable to determine hostname", e);
+            hostname = "unknown";
+        }
+
         return HttpResponse.ok(Map.of(
                 "status", "UP",
                 "checkedAt", LocalDateTime.now(),
+                "hostname", hostname,
                 "version", appVersion
         ));
     }
