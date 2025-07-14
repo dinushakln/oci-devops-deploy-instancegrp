@@ -30,8 +30,7 @@ steps:
       echo "BUILDRUN_HASH: $BUILDRUN_HASH"
       export ARTIFACT_REPO_OCID=${ARTIFACT_REPO_OCID_FromVault}
       export ARTIFACT_NAME=${ARTIFACT_FILE_NAME}
-      export APP_VERSION=${APP_VERSION}
-      echo "APP_VERSION: $APP_VERSION"
+      echo "APP_VERSION: ${APP_VERSION}"
 
   - type: Command
     name: "Install GraalVM 22 Native Image for Java 17"
@@ -48,13 +47,15 @@ steps:
     command: |
       export PATH=$JAVA_HOME/bin:$PATH
       mvn --no-transfer-progress clean package -Pnative -Dapp.version=${APP_VERSION}
+      mvn test -Dapp.version=${APP_VERSION}
       mv target/MnHelloRest target/MnHelloRest-${APP_VERSION}
+      cp target/MnHelloRest-${APP_VERSION} target/app-native-executable
       ls -ltr target
 
 outputArtifacts:
   - name: app_native_executable
     type: BINARY
-    location: target/MnHelloRest-${APP_VERSION}
+    location: target/app-native-executable
 
   - name: deployment_spec
     type: BINARY

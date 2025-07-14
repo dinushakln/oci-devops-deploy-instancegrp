@@ -16,7 +16,7 @@ public class HelloController {
 
     private static final Logger LOG = LoggerFactory.getLogger(HelloController.class);
 
-    @Value("${app.version:1.0.0}")
+    @Value("${app.version}")
     protected String appVersion;
 
     @Inject
@@ -35,20 +35,22 @@ public class HelloController {
 
     @Get("/hello/{name}")
     @Produces(MediaType.APPLICATION_JSON)
-    public HttpResponse<Map<String, String>> greetUser(@PathVariable String name) {
+    public HttpResponse<Map<String, Object>> greetUser(@PathVariable String name) {
         LOG.info("Greeting request for user: {}", name);
         return HttpResponse.ok(Map.of(
                 "greeting", greetingService.generateGreeting(name),
+                "timestamp", LocalDateTime.now(),
                 "version", appVersion
         ));
     }
 
     @Get("/health")
     @Produces(MediaType.APPLICATION_JSON)
-    public HttpResponse<Map<String, String>> health() {
+    public HttpResponse<Map<String, Object>> health() {
         return HttpResponse.ok(Map.of(
                 "status", "UP",
-                "checkedAt", LocalDateTime.now().toString()
+                "checkedAt", LocalDateTime.now(),
+                "version", appVersion
         ));
     }
 
