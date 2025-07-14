@@ -48,7 +48,6 @@ steps:
       export PATH=$JAVA_HOME/bin:$PATH
       mvn --no-transfer-progress clean package -Pnative -Dapp.version=${APP_VERSION}
       mvn test -Dapp.version=${APP_VERSION}
-      mv target/MnHelloRest target/MnHelloRest-${APP_VERSION}
       cp target/MnHelloRest-${APP_VERSION} target/app-native-executable
       ls -ltr target
 

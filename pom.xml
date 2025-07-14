@@ -21,8 +21,8 @@
     <jdk.version>17</jdk.version>
     <release.version>17</release.version>
     <exec.mainClass>com.example.Application</exec.mainClass>
-    <native.image.name>${project.artifactId}-${project.version}</native.image.name>
-    <app.version>${app.version}</app.version> <!-- ✅ for injection -->
+    <app.version>${project.version}</app.version> <!-- fixed here -->
+    <native.image.name>${project.artifactId}-${app.version}</native.image.name>
   </properties>
 
   <repositories>
@@ -110,7 +110,7 @@
           <include>**/*.yml</include>
           <include>**/*.properties</include>
         </includes>
-        <filtering>true</filtering> <!-- ✅ Enable filtering for application.yml -->
+        <filtering>true</filtering> <!-- Enable filtering for application.yml -->
       </resource>
     </resources>
 
