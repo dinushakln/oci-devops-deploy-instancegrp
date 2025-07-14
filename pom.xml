@@ -22,6 +22,7 @@
     <release.version>17</release.version>
     <exec.mainClass>com.example.Application</exec.mainClass>
     <native.image.name>${project.artifactId}-${project.version}</native.image.name>
+    <app.version>${app.version}</app.version> <!-- ✅ for injection -->
   </properties>
 
   <repositories>
@@ -102,6 +103,17 @@
   </dependencies>
 
   <build>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <includes>
+          <include>**/*.yml</include>
+          <include>**/*.properties</include>
+        </includes>
+        <filtering>true</filtering> <!-- ✅ Enable filtering for application.yml -->
+      </resource>
+    </resources>
+
     <plugins>
       <!-- Micronaut Maven Plugin -->
       <plugin>
@@ -145,7 +157,6 @@
     </plugins>
   </build>
 
-  <!-- Native Build Profile -->
   <profiles>
     <profile>
       <id>native</id>
