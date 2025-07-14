@@ -1,5 +1,5 @@
 app:
-  version: ${APP_VERSION}
+  version: @app.version@
 
 micronaut:
   application:
