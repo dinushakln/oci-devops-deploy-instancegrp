@@ -8,7 +8,7 @@ shell: bash
 env:
   variables:
     JAVA_HOME: "/usr/lib64/graalvm/graalvm22-ee-java17"
-    APP_VERSION: "1.0.8"
+    APP_VERSION: "1.0.9"
     APP_FILE: "MnHelloRest-${APP_VERSION}"
     ARTIFACT_FILE_NAME: "exec-app"
     TAG: "mn-hello-ni:${APP_VERSION}"
